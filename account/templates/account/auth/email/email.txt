@@ -1,0 +1,10 @@
+HI {{user.username}}
+we have recieved your request to change password
+
+copy this url and paste in your address or click on the link to continue. 
+
+http://127.0.0.1:8000{% url 'change-password' id=user.id otp=otp %} 
+963358457113-f750q7ohpbduoc5hphfruc6qt9ibqkcf.apps.googleusercontent.com
+6_7P7Z5xYHe4GyaRY6bDhc58
+Thanks,
+getmeds
