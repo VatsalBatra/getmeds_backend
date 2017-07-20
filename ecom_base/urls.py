@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^hello/$',accountviews.hello),
     url(r'^$',accountviews.show_login,name = 'base'),
     url(r'^users/',include('account.urls')),
+    url(r'^products/',include('products.urls'))
     
     # url(r'^users/',include('social.apps.django_app.urls', namespace='social'))
     

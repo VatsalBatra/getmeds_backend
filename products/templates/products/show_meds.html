@@ -1,1 +1,38 @@
+{% extends 'common/base.html' %}
 {% load staticfiles %}
+{% block content %}
+
+{{message}}
+<h3>hello</h3>
+<input type="text" name="search_box" id = "search">
+<div id = "yo"></div>
+<div id = "list">
+
+<ul>
+	{% for l in list_view %}
+	<li>
+		
+		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p></div><div><button class = "yoy" id = "buttons" >Click</button></div>
+
+	</li>
+
+	{% endfor %}
+</ul>
+
+</div>
+<style>
+	li {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+</style>
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <script >
+    	function onBodyLoad(){
+    		module.init({	'search':'search',
+    						'search_box':'yo'});
+    	}
+    	window.addEventListener('load',onBodyLoad);
+    </script>
+{% endblock %}

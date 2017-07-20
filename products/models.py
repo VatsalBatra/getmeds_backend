@@ -7,6 +7,14 @@ from account.models import MyUser
 class meds(models.Model):
 	created_on = models.DateTimeField(auto_now_add = True)
 	title = models.CharField(max_length = 100, default = '')
+	rate = models.CharField(max_length = 100, default = '')
 	def __str__(self):
 		return self.title
+class cart(models.Model):
 
+
+	title = models.CharField(max_length = 100, default = '')
+	created_on = models.DateTimeField(auto_now_add = True)
+	rate = models.CharField(max_length = 100, default = '')
+	def __str__(self):
+		return self.title
