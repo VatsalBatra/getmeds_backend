@@ -5,14 +5,18 @@
 {{message}}
 <h3>hello</h3>
 <input type="text" name="search_box" id = "search">
-<div id = "yo"></div>
+<div id = "suggestions"></div>
 <div id = "list">
 
 <ul>
 	{% for l in list_view %}
+	{% csrf_token %}
 	<li>
 		
-		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p></div><div><button class = "yoy" id = "buttons" >Click</button></div>
+		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p>
+		<p class="rate">21</p>
+		<p class="name2">s</p>
+		<p class="name3">d</p></div><div><button class = "add_button" id = "buttons" >Click</button></div>
 
 	</li>
 
@@ -29,10 +33,14 @@
 </style>
     <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
     <script >
+    //SEARCH SEARCH ADD TO CART
     	function onBodyLoad(){
     		module.init({	'search':'search',
-    						'search_box':'yo'});
+    						'suggestions_box':'suggestions',
+    						'button':'add_button' ,
+    						'content':'content' });
     	}
     	window.addEventListener('load',onBodyLoad);
     </script>
+    
 {% endblock %}

@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
+from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.http import Http404, JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST,require_http_methods
@@ -16,32 +17,55 @@ def show_all(request):
 
 
 def add_to_cart(request):
-	return HttpResponse("ok")
+	if request.method == 'GET':
+		rate = request.GET.get('rate','');
+		title = request.GET.get('name','');
+	
+		print(rate);
+		print(title);
+		item =cart(title = title,rate = rate)
+		item.save()
+		return HttpResponse("ok")
 
 
 def remove_from_cart(request):
-	return HttpResponse("ok2")
+	if request.method == 'GET':
+		rate = request.GET.get('rate','');
+		title = request.GET.get('name','');
+	
+		item =cart.objects.get(title = title)
+		item_id = item.id
+		cart.objects.filter(id=item_id).delete();
+		context = {'message' : "item removed successfully",
+					'list_view':cart.objects.all()}
+		# HOW TO DO USING REDIRECT AND REVERSE -EVEN WITHIUT MESSAGE HOW TO DO USING REVERSE AND REDIRECT
+		return render(request,'products/show_cart.html',context)
+	
 	
 
-def cart_list(request):
-	return HttpResponse("ok3")
+def show_cart(request):
+	content = {'list_view':cart.objects.all()}
+
+	return render(request,'products/show_cart.html',content)
+
 
 
 def search(request):
+	if request.is_ajax() and request.GET:
 
-	variable = request.GET.get('searched','')
+		variable = request.GET.get('searched','')
 	
-	meds_result = meds.objects.all();
-	inventory = [];
-	for med in meds_result:
+		meds_result = meds.objects.all();
+		inventory = [];
+		for med in meds_result:
 		
-		if variable in med.title and variable[0] is med.title[0]:
-			inventory.append(med.title)
+			if variable in med.title and variable[0] is med.title[0]:
+				inventory.append(med.title)
 
-	for i in inventory:
+
 				
-	context = {
-		'output':inventory
-	}
-	return JsonResponse(context,safe = False)
+		context = {
+			'output':inventory
+		}
+		return JsonResponse(context,safe = False)
 	

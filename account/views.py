@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+
 from django.http import Http404, JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST,require_http_methods
 from django.views.decorators.csrf import csrf_exempt
@@ -9,6 +10,7 @@ from .models import MyUser, create_otp, get_valid_otp_object
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
+from django.shortcuts import redirect
 # Create your views here.
 def hello(request):
     return HttpResponse('<h1>Hello</h1>');
