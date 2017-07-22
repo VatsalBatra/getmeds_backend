@@ -3,9 +3,8 @@
 {% block content %}
 
 {{message}}
-<h3>hello</h3>
-<input type="text" name="search_box" id = "search">
-<div id = "yo"></div>
+<h1>CART</h1>
+<div id = "error_message"></div>
 <div id = "list">
 
 <ul>
@@ -14,9 +13,11 @@
 	<li>
 		
 		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p>
-		<p class="rate">21</p>
-		<p class="name2">0</p>
-		<p class="name3">d</p></div><div><button class = "remove_button" id = "buttons" >Click</button></div>
+		<p class="rate">{{l.rate}}</p>
+		<div class ="quantity_box" >
+		<button class ="down"> < </button><p class="quantity">{{ l.quantity}}</p><button class ="up"> > </button>
+		</div>
+		<p class="name3">do</p></div><div><button class = "remove_button" id = "buttons" >Click</button></div>
 
 	</li>
 
@@ -24,13 +25,13 @@
 </ul>
 
 </div>
-<script type="text/javascript">
-	function onBodyLoad(){
+<script>
+	function onCartLoad(){
 		module.init({
-			
+			'error_box':'error_message'
 		})
 
 	}
-	window.addEventListener('load', onBodyLoad)
+	window.addEventListener('load', onCartLoad);
 </script>
 {% endblock %}

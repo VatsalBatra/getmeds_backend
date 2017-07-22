@@ -10,7 +10,7 @@ from .models import MyUser, create_otp, get_valid_otp_object
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
-from django.shortcuts import redirect
+
 # Create your views here.
 def hello(request):
     return HttpResponse('<h1>Hello</h1>');
