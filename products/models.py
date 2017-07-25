@@ -19,7 +19,7 @@ class cart(models.Model):
 	rate = models.CharField(max_length = 100, default = '')
 	quantity  = models.IntegerField(default=0, blank=False);
 	user = models.ForeignKey(MyUser,related_name = 'user',default = '',null	=	True)
-	# meds = models.ManyToManyField(meds,related_name = "ordered_meds",default = '')
+	meds = models.ManyToManyField(meds,related_name = "ordered_meds",default = '')
 
 	def __str__(self):
 		return self.title

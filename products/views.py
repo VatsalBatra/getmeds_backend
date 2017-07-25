@@ -16,15 +16,17 @@ def show_all(request):
 
 	return render(request,'products/show_meds.html',content)
 
-def inc_quantity(request):
+@login_required
+def inc_quantity(request,id = None):
+	print(id)
 	if request.method == 'GET':
-		rate = request.GET.get('rate','');
+
 		title = request.GET.get('name','');
 		quantity = request.GET.get('quantity','')
 		print("popopopopopopopopoasdagdjkhasgdmasbd")
-		if  cart.objects.filter(title = title,rate = rate).exists() :
+		if  cart.objects.filter(title = title,user = request.user).exists() :
 			print("sdagdjkhasgdmasbd")
-			item = cart.objects.get(title = title)
+			item = cart.objects.get(title = title,user = request.user)
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
@@ -32,16 +34,16 @@ def inc_quantity(request):
 			#WRITE ELSE FOR THIS IF
 		return HttpResponse("ok")
 
-
-def dec_quantity(request):
+@login_required
+def dec_quantity(request,id = None):
 	if request.method == 'GET':
-		rate = request.GET.get('rate','');
+
 		title = request.GET.get('name','');
 		quantity = request.GET.get('quantity','')
 		print("popopopopopopopopoasdagdjkhasgdmasbd")
-		if  cart.objects.filter(title = title,rate = rate).exists() :
+		if  cart.objects.filter(title = title,user = request.user).exists() :
 			print("sdagdjkhasgdmasbd")
-			item = cart.objects.get(title = title)
+			item = cart.objects.get(title = title,user =request.user)
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
@@ -50,13 +52,13 @@ def dec_quantity(request):
 		return HttpResponse("ok")
 
 
-
-def remove_from_cart(request):
+@login_required
+def remove_from_cart(request,id = None):
 	if request.method == 'GET':
-		rate = request.GET.get('rate','');
 		title = request.GET.get('name','');
 	
-		item =cart.objects.get(title = title)
+		item =cart.objects.get(title = title,user = request.user)
+		print(id)
 		item_id = item.id
 		cart.objects.filter(id=item_id).delete();
 		# context = {'message' : "item removed successfully",
@@ -64,6 +66,7 @@ def remove_from_cart(request):
 		# HOW TO DO USING REDIRECT AND REVERSE -EVEN WITHIUT MESSAGE HOW TO DO USING REVERSE AND REDIRECT
 		# also render is not working WHY??
 		# return render(request,'products/show_cart.html',context)
+		print(id)
 		return HttpResponse("ok")
 	
 	
@@ -104,7 +107,7 @@ def search(request):
 
 
 @login_required
-def add_to_cart(request):
+def add_to_cart(request,id = None):
 	k = get_object_or_404(MyUser,pk = request.user.id)
 	print(k.id);
 

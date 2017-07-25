@@ -41,7 +41,7 @@ var module =(function(){
 			method:'GET',
 			data:{
 				'name':name,
-				'rate':rate
+				// 'rate':rate
 			},
 			success:function(content){
 				window.location.href = ' '
@@ -106,7 +106,6 @@ var module =(function(){
 			method:'GET',
 			data:{
 				'name':name,
-				'rate':rate,
 				'quantity':new_quantity
 			},
 			success:function(context){
@@ -153,7 +152,6 @@ var module =(function(){
 			method:'GET',
 			data:{
 				'name':name,
-				'rate':rate,
 				'quantity':new_quantity
 
 			},
