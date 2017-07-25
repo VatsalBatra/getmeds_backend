@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import meds,cart
 from django.contrib.contenttypes.models import ContentType
 from django.apps import apps
+from account.models import MyUser
 
 
 def show_all(request):
@@ -48,28 +49,6 @@ def dec_quantity(request):
 		#WRITE ELSE FOR THIS IF
 		return HttpResponse("ok")
 
-def add_to_cart(request):
-	if request.method == 'GET':
-		rate = request.GET.get('rate','');
-		title = request.GET.get('name','');
-		quantity = request.GET.get('quantity','')
-		item =cart(title = title,rate = rate)
-
-		if  cart.objects.filter(title = title,rate = rate).exists() :
-			print("opopopopopopop")
-			item = cart.objects.get(title = title);
-			#can use similar way to get total rate of all the quantity
-			original_qantity = getattr(item,'quantity');
-			final_quantity = original_qantity + int(quantity)
-			setattr(item,'quantity',final_quantity)			
-			item.save()
-
-		else:
-			original_qantity = getattr(item,'quantity');
-			final_quantity = original_qantity + int(quantity)
-			setattr(item,'quantity',final_quantity)	
-			item.save()
-		return HttpResponse("ok")
 
 
 def remove_from_cart(request):
@@ -88,11 +67,19 @@ def remove_from_cart(request):
 		return HttpResponse("ok")
 	
 	
-
-def show_cart(request):
-	content = {'list_view':cart.objects.all()}
-
-	return render(request,'products/show_cart.html',content)
+@login_required
+def show_cart(request,id = None):
+	user = request.user;
+	if request.method == 'GET':
+		if user.is_authenticated():
+			user = get_object_or_404(MyUser,pk = request.user.id)
+			mycart = cart.objects.filter(user = user)
+			content = {'list_view':mycart}
+			return render(request,'products/show_cart.html',content)
+		else:
+			content = {	'message':"please login to continue",
+						'user':request.user}
+			return render(request,'products/show_cart.html',content)
 
 
 
@@ -114,4 +101,51 @@ def search(request):
 			'output':inventory
 		}
 		return JsonResponse(context,safe = False)
+
+
+@login_required
+def add_to_cart(request):
+	k = get_object_or_404(MyUser,pk = request.user.id)
+	print(k.id);
+
+
+	if request.method == 'GET':
+		rate = request.GET.get('rate','');
+		title = request.GET.get('name','');
+		quantity = request.GET.get('quantity','')
+
+
+
+		print(request.user)
+		if not cart.objects.filter(title = title,user = k ).exists() :
+			print("opopopopopopop")
+			#can use similar way to get total rate of all the quantity
+			item = cart(title = title,quantity = quantity,user = k)
+			
+			med = meds.objects.get(title = title)
+
+			# setattr(item,'quantity',final_quantity)
+			b = getattr(item,'user')
+			print(b)
+			print("popopowqeqweqwmfnsdnlkasjdl;kaj")
+			# setattr(item,'user',request.user)
+			a = getattr(item,'user')
+			print(a)
+
+			item.save()
+
+		else:
+			print("12312312312312312312312312")
+			
+
+			item = cart.objects.get(title = title,user = k);
+			original_quantity = getattr(item,'quantity')
+			print(original_quantity)
+			final_quantity =  original_quantity + int(quantity)
+			setattr(item,'quantity',final_quantity)
+			item.save();	
+			print(final_quantity)
+
+		return HttpResponse("ok")
+
 	

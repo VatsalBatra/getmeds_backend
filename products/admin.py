@@ -4,5 +4,12 @@ from .models import meds,cart
 
 
 # Register your models here.
-admin.site.register(meds)
-admin.site.register(cart)
+@admin.register(meds)
+class MedsAdmin(admin.ModelAdmin):
+	list_display = ['title','rate']
+	date_hierarchy = 'created_on'
+
+@admin.register(cart)
+class CartAdmin(admin.ModelAdmin):
+	list_display = ['title','quantity','user']
+	date_hierarchy = 'created_on'

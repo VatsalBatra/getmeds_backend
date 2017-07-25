@@ -10,7 +10,7 @@ urlpatterns = [
 	url(r'^cart/remove/$',remove_from_cart,name = "remove_from_cart"),
 	url(r'^all/search/$',search,name = "search"),
 	url(r'^all/cart/$',add_to_cart,name = "add_to_cart"),
-	url(r'^cart/$',show_cart,name = "cart"),
+	url(r'^(?P<id>\d+)/cart/$',show_cart,name = "cart"),
 	url(r'^cart/increase/$',inc_quantity, name = "increase"),
 	url(r'^cart/decrease/$',dec_quantity, name = "decrease"),
 
