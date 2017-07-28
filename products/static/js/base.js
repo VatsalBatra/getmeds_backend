@@ -72,7 +72,7 @@ var module =(function(){
 			success:function(context){
 				var list = context.output;
 				for( var i = 0;i<list.length;i++){
-					$(box).append( '<p>' + list[i] + '</p>');
+					$(box).append( '<p><a>' + list[i] + '</a></p>');
 				}
 
 			},
