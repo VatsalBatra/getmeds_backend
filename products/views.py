@@ -9,20 +9,22 @@ from .models import meds,cart,cart_item
 from django.contrib.contenttypes.models import ContentType
 from django.apps import apps
 from account.models import MyUser
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 
 
 def show_all(request):
 	content = {'list_view':meds.objects.all()}
 
 	return render(request,'products/show_meds.html',content)
-
+@csrf_exempt
 @login_required
 def inc_quantity(request,id = None):
 	print(id)
-	if request.method == 'GET':
+	if request.method == 'POST':
 
-		title = request.GET.get('name','');
-		quantity = request.GET.get('quantity','')
+		title = request.POST.get('name','');
+		quantity = request.POST.get('quantity','')
 		print("popopopopopopopopoasdagdjkhasgdmasbd")
 		if  cart_item.objects.filter(title = title,orderer = request.user).exists() :
 			print("sdagdjkhasgdmasbd")
@@ -34,13 +36,13 @@ def inc_quantity(request,id = None):
 			#how to controle max  limit condition and display of error message from views.py
 			#WRITE ELSE FOR THIS IF
 		return HttpResponse("ok")
-
+@csrf_exempt
 @login_required
 def dec_quantity(request,id = None):
-	if request.method == 'GET':
+	if request.method == 'POST':
 
-		title = request.GET.get('name','');
-		quantity = request.GET.get('quantity','')
+		title = request.POST.get('name','');
+		quantity = request.POST.get('quantity','')
 		print("popopopopopopopopoasdagdjkhasgdmasbd")
 		if  cart_item.objects.filter(title = title,orderer = request.user).exists() :
 			print("sdagdjkhasgdmasbd")
@@ -52,11 +54,11 @@ def dec_quantity(request,id = None):
 		#WRITE ELSE FOR THIS IF
 		return HttpResponse("ok")
 
-
+@csrf_exempt
 @login_required
 def remove_from_cart(request,id = None):
-	if request.method == 'GET':
-		title = request.GET.get('name','');
+	if request.method == 'POST':
+		title = request.POST.get('name','');
 	
 		item =cart_item.objects.get(title = title,orderer = request.user)
 
@@ -69,7 +71,11 @@ def remove_from_cart(request,id = None):
 		# return render(request,'products/show_cart.html',context)
 		return HttpResponse("ok")
 	
-	
+
+
+
+
+
 @login_required
 def show_cart(request,id = None):
 	user = request.user;
@@ -91,6 +97,7 @@ def show_cart(request,id = None):
 			return render(request,'products/show_cart.html',content)
 
 
+
 # MAKE IT FOR BOTH CAPUTAL AND SMALL
 def search(request):
 	if request.is_ajax() and request.GET:
@@ -99,25 +106,25 @@ def search(request):
 	
 		meds_result = meds.objects.all();
 		inventory = [];
+		link = []
 		for med in meds_result:
-			print(variable[0].lower() + "   " +med.title[0].lower() )
 			if variable in med.title.lower() and variable[0].lower() == med.title[0].lower():
 				inventory.append(med.title)
+				link.append(med.id);
 
-
-				
 		context = {
-			'output':inventory
+			'output':inventory,
+			'link':link
 		}
 		return JsonResponse(context,safe = False)
 
-
+@csrf_exempt
 @login_required
 def add_to_cart(request,id = None):
-	if request.method == 'GET':
-		rate = request.GET.get('rate','');
-		title = request.GET.get('name','');
-		quantity = request.GET.get('quantity','')
+	if request.method == 'POST':
+		rate = request.POST.get('rate','');
+		title = request.POST.get('name','');
+		quantity = request.POST.get('quantity','')
 		product = cart_item(title = title,orderer = request.user)
 		print(request.user.id)
 		if not cart.objects.filter(user = request.user).exists() :
@@ -156,6 +163,13 @@ def add_to_cart(request,id = None):
 		return HttpResponse("ok")
 
 
+
+def show_product(request,id = None):
+	return HttpResponse(id)
+
+def make_wishlist(request):
+	print(request.COOKIES)
+	
 
 
 # METHID - CONSIDER CART AS ITEM WE STORE ITEM AND ON CART ALL SHOW TO ITEM ATTACHED TO CORESSPONding EMAIL 

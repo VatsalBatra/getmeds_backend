@@ -1,15 +1,17 @@
 {% extends 'common/base.html' %}
 {% load staticfiles %}
+	{% csrf_token %}
 {% block content %}
 {{user.username}}
 {{message}}
+
 <h1>CART</h1>
 <div id = "error_message"></div>
 <div id = "list">
 
 <ul>
 	{% for l in list_view %}
-	{% csrf_token %}
+
 	<li>
 		
 		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p>

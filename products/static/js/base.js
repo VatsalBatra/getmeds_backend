@@ -11,8 +11,8 @@ var module =(function(){
 		console.log(quantity)
 
 		$.ajax({
+			method:"POST",
 			url:'cart/',
-			method:'GET',
 			data:{
 				'name':name,
 				'rate':rate,
@@ -38,7 +38,7 @@ var module =(function(){
 		console.log(rate)
 		$.ajax({
 			url:'remove/',
-			method:'GET',
+			method:"POST",
 			data:{
 				'name':name,
 				// 'rate':rate
@@ -70,9 +70,11 @@ var module =(function(){
 				'searched':searched,
 			},
 			success:function(context){
+				var h = "'" + "item_show"+ "'"
 				var list = context.output;
+				var link = context.link
 				for( var i = 0;i<list.length;i++){
-					$(box).append( '<p><a>' + list[i] + '</a></p>');
+					$(box).append( '<p><a href = "{% url  '+ h +' %}">' + list[i] + '</a></p>');
 				}
 
 			},
@@ -103,7 +105,7 @@ var module =(function(){
 
 		$.ajax({
 			url: 'increase/',
-			method:'GET',
+			method:'POST',
 			data:{
 				'name':name,
 				'quantity':new_quantity
@@ -149,7 +151,7 @@ var module =(function(){
 
 			$.ajax({
 			url:'decrease/' ,
-			method:'GET',
+			method:'POST',
 			data:{
 				'name':name,
 				'quantity':new_quantity
