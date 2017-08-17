@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import show_all,add_to_cart,remove_from_cart,search,show_cart,inc_quantity,dec_quantity,show_product,make_wishlist,make_payment_page
+from .views import show_all,add_to_cart,remove_from_cart,search,show_cart,inc_quantity,dec_quantity,show_product,make_wishlist,make_payment_page,payment_total
 
 
 urlpatterns = [
@@ -14,7 +14,7 @@ urlpatterns = [
 	url(r'^(?P<id>\d+)/cart/decrease/$',dec_quantity, name = "decrease"),
 	url(r'^all/item/$',show_product,name = "item_show"),
 	url(r'^wishlist/$',make_wishlist,name = "wishlist"),
-	url(r'^(?P<id>\d+)/cart/payment/$',make_payment_page,name = 'payment_page')
+	url(r'^(?P<id>\d+)/cart/payment/$',make_payment_page,name = 'payment_page'),
 
     
     # url(r'^users/',include('social.apps.django_app.urls', namespace='social'))

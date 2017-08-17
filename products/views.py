@@ -32,11 +32,16 @@ def inc_quantity(request,id = None):
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
-			print(payment_total(request,id))
-
+			print("dhinchak pooja")
+			total_bill = payment_total(request,id)
+			print(total_bill)
+			content = {
+				'total_bill':total_bill
+			}
 			#how to controle max  limit condition and display of error message from views.py
 			#WRITE ELSE FOR THIS IF
-		return HttpResponse("ok")
+		return JsonResponse(content)
+	
 @csrf_exempt
 @login_required
 def dec_quantity(request,id = None):
@@ -51,10 +56,16 @@ def dec_quantity(request,id = None):
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
-			print(payment_total(request,id))
+			print("dhinchak pooja")
+			total_bill = payment_total(request,id)
+			print(total_bill)
+			content = {
+				'total_bill':total_bill
+			}
 			#how to controle max  limit condition and display of error message from views.py
 		#WRITE ELSE FOR THIS IF
-		return HttpResponse("ok")
+		return JsonResponse(content)
+	
 
 @csrf_exempt
 @login_required
@@ -67,12 +78,18 @@ def remove_from_cart(request,id = None):
 		item_id = item.id
 		cart_item.objects.filter(id=item_id).delete();
 		print(payment_total(request,id))
+		print("dhinchak pooja")
+		total_bill = payment_total(request,id)
+		print(total_bill)
+		content = {
+		'total_bill':total_bill
+		}
 		# context = {'message' : "item removed successfully",
 		# 			'list_view':cart.objects.all()}
 		# HOW TO DO USING REDIRECT AND REVERSE -EVEN WITHIUT MESSAGE HOW TO DO USING REVERSE AND REDIRECT
 		# also render is not working WHY??
 		# return render(request,'products/show_cart.html',context)
-		return HttpResponse("ok")
+		return JsonResponse(content)
 	
 
 
@@ -94,9 +111,7 @@ def payment_total(request,id = None):
 			total_item_price =  int(item_price)*int(item_quantity);
 			total_bill = total_bill + int(total_item_price)
 
-		print("opopopopopopopopopopopopopopopopopopopopopopop")
-		print(total_bill)
-	return(total_bill)
+		return(total_bill)
 
 @login_required
 def show_cart(request,id = None):
@@ -107,6 +122,7 @@ def show_cart(request,id = None):
 			print(user)
 			my_user_cart = get_object_or_404(cart,user = user)
 			my_cart_items = my_user_cart.cart_item.all();
+			total_bill = payment_total(request,id)
 			# for my_cart_item in my_cart_items:
 			# 	lis
 			# total_bill = 0;
@@ -119,7 +135,8 @@ def show_cart(request,id = None):
 			print("kladjfl;aksfjl;aksdjfals;kdfjlaks;djfals;kdjfasl;kfjasl;kjf")
 			
 
-			content = {'list_view':my_user_cart.cart_item.all()}
+			content = {'list_view':my_user_cart.cart_item.all(),
+			'cart_value':total_bill}
 			return render(request,'products/show_cart.html',content)
 			# HttpResponse("ok")
 		else:

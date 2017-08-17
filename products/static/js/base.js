@@ -44,11 +44,13 @@ var module =(function(){
 				'name':name,
 				// 'rate':rate
 			},
-			success:function(content){
+			success:function(context){
 				window.location.href = ' '
+			
 			},
 			error:function(){
 				console.log("remove_from_cart_prob");
+				
 
 			}
 
@@ -113,6 +115,9 @@ var module =(function(){
 			},
 			success:function(context){
 
+				console.log(context.total_bill)
+				cart_value.innerHTML = ""
+				cart_value.append(context.total_bill)
 		
 
 		
@@ -159,7 +164,10 @@ var module =(function(){
 				'quantity':new_quantity
 
 			},
-			success:function(){
+			success:function(context){
+					console.log(context.total_bill)
+					cart_value.innerHTML = ""
+					cart_value.append(context.total_bill)
 
 
 			},
@@ -172,6 +180,25 @@ var module =(function(){
 	
 
 	}
+	//not working???
+// 	//SHOW CART VALUE
+// function cart_value(){
+// 	$.ajax({
+// 		method:'GET',
+// 		url :'total/'
+// 		data:{
+
+// 		},
+// 		success:function(content){
+// 			console.log("payment_total_success")
+
+// 		},error:function(){
+// 			console.log("payment_total_failure")
+
+// 		}
+
+// 	})
+// }
 
 
 	function init(config){
@@ -192,6 +219,8 @@ var module =(function(){
 		$('.up').click(up_quantity);
 		$('.down').click(down_quantity);
 
+		//TOTAL QUANTITY
+		cart_value = document.getElementById(config['cart_value']);
 
 
 
