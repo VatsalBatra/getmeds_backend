@@ -32,6 +32,7 @@ def inc_quantity(request,id = None):
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
+			print(payment_total(request,id))
 
 			#how to controle max  limit condition and display of error message from views.py
 			#WRITE ELSE FOR THIS IF
@@ -50,6 +51,7 @@ def dec_quantity(request,id = None):
 			print(item);
 			setattr(item,'quantity',quantity)
 			item.save()
+			print(payment_total(request,id))
 			#how to controle max  limit condition and display of error message from views.py
 		#WRITE ELSE FOR THIS IF
 		return HttpResponse("ok")
@@ -64,6 +66,7 @@ def remove_from_cart(request,id = None):
 
 		item_id = item.id
 		cart_item.objects.filter(id=item_id).delete();
+		print(payment_total(request,id))
 		# context = {'message' : "item removed successfully",
 		# 			'list_view':cart.objects.all()}
 		# HOW TO DO USING REDIRECT AND REVERSE -EVEN WITHIUT MESSAGE HOW TO DO USING REVERSE AND REDIRECT
@@ -75,6 +78,25 @@ def remove_from_cart(request,id = None):
 
 
 
+def payment_total(request,id = None):
+	user = request.user;
+	if user.is_authenticated():
+		user = get_object_or_404(MyUser,pk = request.user.id)
+		print(user)
+		my_user_cart = get_object_or_404(cart,user = user)
+		my_cart_items = my_user_cart.cart_item.all();
+			# for my_cart_item in my_cart_items:
+			# 	lis
+		total_bill = 0;
+		for item in my_cart_items:
+			item_price = item.rate;
+			item_quantity = item.quantity;
+			total_item_price =  int(item_price)*int(item_quantity);
+			total_bill = total_bill + int(total_item_price)
+
+		print("opopopopopopopopopopopopopopopopopopopopopopop")
+		print(total_bill)
+	return(total_bill)
 
 @login_required
 def show_cart(request,id = None):
@@ -87,6 +109,15 @@ def show_cart(request,id = None):
 			my_cart_items = my_user_cart.cart_item.all();
 			# for my_cart_item in my_cart_items:
 			# 	lis
+			# total_bill = 0;
+			# for item in my_cart_items:
+			# 		item_price = item.rate;
+			# 		item_quantity = item.quantity;
+			# 		total_item_price =  int(item_price)*int(item_quantity);
+			# 		total_bill = total_bill + int(total_item_price)
+			print(payment_total(request,id))
+			print("kladjfl;aksfjl;aksdjfals;kdfjlaks;djfals;kdjfasl;kfjasl;kjf")
+			
 
 			content = {'list_view':my_user_cart.cart_item.all()}
 			return render(request,'products/show_cart.html',content)
@@ -162,7 +193,8 @@ def add_to_cart(request,id = None):
 				shopping_cart.cart_item.add(product.id)
 		return HttpResponse("ok")
 
-
+def make_payment_page(request):
+	return HttpResponse("payment kr kamine")
 
 def show_product(request,id = None):
 	return HttpResponse(id)

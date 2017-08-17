@@ -2,6 +2,7 @@ var module =(function(){
 	var el = null;
 	var box = null;
 	var error_box = null;
+
 	//ADD TO CART FUNCTION
 	function add_to_cart(){
 			//WHY SIBLINGS ,PREV, NEXT FUNCTION NOT WORKING ?????????????/
@@ -31,8 +32,8 @@ var module =(function(){
 
 	}
 	//REMOVE FROM CART FUNCTION
-	function remove_from_cart(){
-		var name = $(this).closest('li').find('p.name').text();
+	function remove_from_cart(dec_quantity_variable = this){
+		var name = $(this).closest('li').find('p.name').text()||$(dec_quantity_variable).closest('li').find('p.name').text();
 		var rate = $(this).closest('li').find('p.rate').text();
 		console.log(name)
 		console.log(rate)
@@ -143,7 +144,8 @@ var module =(function(){
 		var name = $(this).closest('li').find('p.name').text();
 		var rate = $(this).closest('li').find('p.rate').text();
 		if(new_quantity<=0){
-			error_box.innerHTML = "min quantity 0 is reached"
+			error_box.innerHTML = "min quantity 0 is reached-item is removed"
+			remove_from_cart($(this));
 			//CALL remove_from_cart FUNCTION HERE	
 			return
 
@@ -171,6 +173,7 @@ var module =(function(){
 
 	}
 
+
 	function init(config){
 		//SEARCH REQ.
 		box = document.getElementById(config['suggestions_box']);
@@ -197,6 +200,7 @@ var module =(function(){
 	return {
 		init:init
 	}
+
 }())
 
 
