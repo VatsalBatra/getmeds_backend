@@ -1,0 +1,51 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{{message}}
+
+<input type="text" name="search_box" id = "search">
+<div id = "suggestions"></div>
+<div id = "list">
+
+<ul>
+	{% for l in list_view %}
+	{% csrf_token %}
+	<li>
+		
+		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p>
+		<p class="rate">2</p>
+		<p class="quantity"><select>
+  <option value="1" selected="selected">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select></p>
+		<p class="name3">d</p></div><div><button class = "add_button" id = "buttons" >Click</button></div>
+
+	</li>
+
+	{% endfor %}
+</ul>
+
+</div>
+<style>
+	li {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+</style>
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <script >
+    //SEARCH SEARCH ADD TO CART
+    	function onBodyLoad(){
+    		module.init({	'search':'search',
+    						'suggestions_box':'suggestions',
+    						'button':'add_button' ,
+    						'content':'content' });
+    	}
+    	window.addEventListener('load',onBodyLoad);
+    </script>
+    
+{% endblock %}

@@ -2,9 +2,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+ 	<meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="963358457113-f750q7ohpbduoc5hphfruc6qt9ibqkcf.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+     <script src="{% static 'js/base.js' %}"></script>
 	<title>{% block title %} ECOM {% endblock %}</title>
 </head>
 <body>
+<h2>DATA</h2>
 	{% block content %}{% endblock %}
 </body>
+<script>
+	
+</script>
 </html>

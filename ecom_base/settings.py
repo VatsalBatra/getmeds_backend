@@ -38,7 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'products',
+    # 'social_django',
+    # 'social.apps.django_app.default',
+    # 'social_auth',
+
 ]
+
+    
+
+
+
+# LOGIN_URL = '/login/'
+# LOGIN_ERROR_URL =  '/login-error/' 
+# LOGIN_ERROR_URL = '/private/'                     
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +62,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'ecom_base.urls'
@@ -64,6 +78,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'social.apps.django_app.context_processors.backends',
+                # 'social.apps.django_app.context_processors.login_redirect',
+                # 'django.contrib.auth.context_processors.auth',
+                # 'social_auth.context_processors.social_auth_by_type_backends',
             ],
         },
     },
@@ -71,9 +89,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecom_base.wsgi.application'
 
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.google.GoogleOAuth2',
+#     'django.contrib.auth.backends.ModelBackend'
+# )
+# SOCIAL_AUTH_ENABLED_BACKENDS = ('google')
+# SOCIAL_AUTH_DEFAULT_USERNAME ='new_social_auth_user' 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# GOOGLE_OAUTH2_CLIENT_ID = "963358457113-km696qupiceaac10d6vuuj0tdtsu403q.apps.googleusercontent.com"
+# GOOGLE_OAUTH2_CLIENT_SECRET = "B0wAVikevFGAa7lhyLR2F0Hz"
+# # Database
+# # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -122,3 +148,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'account.MyUser'
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'vatsalbatra2211@gmail.com'
+EMAIL_HOST_PASSWORD = 'twvjzthwchlbyvmv'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

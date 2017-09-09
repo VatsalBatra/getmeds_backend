@@ -16,12 +16,16 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from account import views as accountviews
+from products import views as productviews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello/$',accountviews.hello),
     url(r'^$',accountviews.show_login,name = 'base'),
     url(r'^users/',include('account.urls')),
+    url(r'^products/',include('products.urls'))
+    
+    # url(r'^users/',include('social.apps.django_app.urls', namespace='social'))
     
 
 ]

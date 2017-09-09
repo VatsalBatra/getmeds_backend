@@ -1,0 +1,44 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+	{% csrf_token %}
+{% block content %}
+{{user.username}}
+{{message}}
+
+<h1>CART</h1>
+<div id = "error_message"></div>
+<div id = "list">
+
+<ul>
+	{% for l in list_view %}
+
+	<li>
+		
+		<div class = "content" id ="{{l.title}}"><p class="name">{{ l.title }}</p>
+		<p class="rate">{{l.rate}}</p>
+		<div class ="quantity_box" >
+		<button class ="down"> < </button><p class="quantity">{{ l.quantity}}</p><button class ="up"> > </button>
+		</div>
+		<p class="name3">do</p></div><div><button class = "remove_button" id = "buttons" >Click</button></div>
+
+	</li>
+
+	{% endfor %}
+</ul>
+
+</div>
+<div id = "cart_value">
+	{{cart_value}}
+</div>
+<button id = "payment_button">Proceed to payment</button>
+<script>
+	function onCartLoad(){
+		module.init({
+			'error_box':'error_message',
+			'cart_value':'cart_value'
+		})
+
+	}
+	window.addEventListener('load', onCartLoad);
+</script>
+{% endblock %}
